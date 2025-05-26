@@ -5,7 +5,7 @@ def call() {
         environment {
             XYZ = 'ITI ITI ITI'
             IMAGE_NAME = 'haneentharwat/jenkins'
-        }  
+        }
 
         stages {
             stage('Build & Dockerize') {
@@ -22,5 +22,5 @@ def call() {
                 }
             }
         }
-    }  
+    }
 }
