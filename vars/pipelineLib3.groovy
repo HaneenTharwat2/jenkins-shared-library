@@ -11,7 +11,8 @@ def call() {
             stage('Build & Dockerize') {
                 steps {
                     echo 'Building Docker image for Python app...'
-                    sh 'docker build -t my-python-app .'
+                    sh 'docker build -t haneentharwat/jenkins .'
+
                 }
             }
 
