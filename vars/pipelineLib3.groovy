@@ -4,22 +4,26 @@ def call() {
 
         environment {
             XYZ = 'ITI ITI ITI'
-            IMAGE_NAME = 'hendsiam/jenkins'
-        }  
+            IMAGE_NAME = 'haneentharwat/jenkins'
+        }
 
         stages {
             stage('Build & Dockerize') {
                 steps {
                     echo 'Building Docker image for Python app...'
-                    sh 'docker build -t my-python-app .'
+                    sh "docker build -t ${IMAGE_NAME}:latest ."
                 }
             }
 
             stage('Push Docker Image') {
                 steps {
                     echo 'Pushing Docker image to DockerHub'
-                    pushDockerImage(env.IMAGE_NAME)
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin"
+                        sh "docker push ${IMAGE_NAME}:latest"
+                    }
                 }
             }
         }
     }
+}
